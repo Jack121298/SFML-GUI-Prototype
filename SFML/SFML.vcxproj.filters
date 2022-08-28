@@ -29,9 +29,6 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <Text Include="Text.txt" />
-  </ItemGroup>
-  <ItemGroup>
     <ClInclude Include="GUI.h">
       <Filter>Header Files</Filter>
     </ClInclude>

@@ -137,9 +137,6 @@
     <ClCompile Include="Window.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <Text Include="Text.txt" />
-  </ItemGroup>
-  <ItemGroup>
     <ClInclude Include="Button.h" />
     <ClInclude Include="GUI.h" />
     <ClInclude Include="Window.h" />
