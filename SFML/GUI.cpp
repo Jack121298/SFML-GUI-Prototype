@@ -1,6 +1,6 @@
 #include "GUI.h"
 
-GUI::GUI()
+GUI::GUI(int x, int y)
 {
 	constructLeftWindow();
 	constructBottomWindow();
@@ -12,14 +12,14 @@ GUI::GUI()
 
 void GUI::constructLeftWindow()
 {
-
+	leftWindow = new Window();
 }
 void GUI::constructBottomWindow()
 {
-
+	bottomWindow = new Window();
 }
 void GUI::constructMainWindow()
 {
-
+	mainWindow = new Window();
 }
 

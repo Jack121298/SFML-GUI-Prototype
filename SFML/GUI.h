@@ -7,7 +7,8 @@ class GUI
 	
 public:
 
-	GUI();
+	GUI(int, int);
+	~GUI();
 	
 
 private:
@@ -16,9 +17,9 @@ private:
 	void constructBottomWindow();
 	void constructMainWindow();
 
-	Window leftWindow;
-	Window bottomWindow;
-	Window mainWindow;
+	Window* leftWindow;
+	Window* bottomWindow;
+	Window* mainWindow;
 
 
 

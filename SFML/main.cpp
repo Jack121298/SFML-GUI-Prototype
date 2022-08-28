@@ -2,6 +2,7 @@
 #include <iostream>
 #include <chrono>
 #include "wtypes.h"
+#include "GUI.h"
 
 using namespace std;
 
@@ -12,6 +13,9 @@ int main()
     DWORD dwHeight = GetSystemMetrics(SM_CYSCREEN);
        
     sf::RenderWindow window(sf::VideoMode(dwWidth, dwHeight), "Viewer", sf::Style::Default);
+
+    GUI* myGui = new GUI(1,1);
+
 
     window.setFramerateLimit(144);
     window.display();
