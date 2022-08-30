@@ -5,15 +5,20 @@ class Window
 {
 public:
 
-	Window();
+	Window(sf::RenderWindow*, int , int);
 	~Window();
+	
+
+	void setPosition(int, int);
+	void setSize(int, int);
+	void addButton();
+	void drawUI();
 
 private:
 
-	sf::RectangleShape* left;
-	sf::RectangleShape* right;
-	sf::RectangleShape* up;
-	sf::RectangleShape* down;
+	sf::Shape* panel;
+	sf::RenderWindow* renderWindow;
+
 
 };
 

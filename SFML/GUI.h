@@ -7,8 +7,10 @@ class GUI
 	
 public:
 
-	GUI(int, int);
+	GUI();
 	~GUI();
+	void run();
+
 	
 
 private:
@@ -21,7 +23,10 @@ private:
 	Window* bottomWindow;
 	Window* mainWindow;
 
+	sf::RenderWindow* window;
 
+	DWORD dwWidth;
+	DWORD dwHeight;
 
 
 
