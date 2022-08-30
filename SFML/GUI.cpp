@@ -55,6 +55,7 @@ void GUI::run()
             }
         } 
 
+        leftWindow->addButton(62, 65);
 
 
         leftWindow->drawUI();
