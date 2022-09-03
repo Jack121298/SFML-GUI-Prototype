@@ -15,12 +15,16 @@ public:
 	void addButton(float, float);
 	void addButton(float, float, std::string);
 	void drawUI();
+	void colourPanel(sf::Color colour);
+	bool isMouseInBounds(sf::Vector2i);
 
 private:
 
 
 	void drawButtons();
 
+
+	sf::Vector2f* location;
 	sf::Shape* panel;
 	sf::RenderWindow* renderWindow;
 	std::vector<sf::Shape> shapeElements;

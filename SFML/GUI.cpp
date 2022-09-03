@@ -1,12 +1,16 @@
 #include <SFML/Graphics.hpp>
+#include <iostream>
 #include "wtypes.h"
 #include "GUI.h"
 #include <iostream>
 
 GUI::GUI()
 {
-    dwWidth = GetSystemMetrics(SM_CXSCREEN);
-    dwHeight = GetSystemMetrics(SM_CYSCREEN);
+    //dwWidth = GetSystemMetrics(SM_CXSCREEN);
+    //dwHeight = GetSystemMetrics(SM_CYSCREEN);
+    dwWidth = 1920;
+    dwHeight = 1080;
+
 
     window = new sf::RenderWindow(sf::VideoMode(dwWidth, dwHeight), "Viewer", sf::Style::Fullscreen);
     window->setFramerateLimit(144);
@@ -31,6 +35,13 @@ void GUI::run()
     {
         window->clear(sf::Color(16, 27, 36));
         sf::Event event;
+        leftWindow->drawUI();
+
+        bottomWindow->drawUI();
+        mainWindow->drawUI();
+        window->display();
+
+
         while (window->pollEvent(event))
         {
             if (event.type == sf::Event::Closed)
@@ -53,16 +64,37 @@ void GUI::run()
                     window->close();
                 }
             }
+            if (event.type == sf::Event::MouseMoved)
+            {
+                if(mainWindow->isMouseInBounds(sf::Mouse::getPosition()))
+                {
+                    std::cout << "1" << std::endl;
+                    mainWindow->colourPanel(sf::Color::Green);
+                    //leftWindow->colourPanel(sf::Color::Black);
+                    //bottomWindow->colourPanel(sf::Color::Black);
+                }
+                
+                if(leftWindow->isMouseInBounds(sf::Mouse::getPosition()))
+                {
+                    std::cout << "2" << std::endl;
+                    mainWindow->colourPanel(sf::Color::Black);
+                    leftWindow->colourPanel(sf::Color::Green);
+                    bottomWindow->colourPanel(sf::Color::Black);
+                }
+                if(bottomWindow->isMouseInBounds(sf::Mouse::getPosition()))
+                {
+                    mainWindow->colourPanel(sf::Color::Black);
+                    leftWindow->colourPanel(sf::Color::Black);
+                    bottomWindow->colourPanel(sf::Color::Green);
+                }
+                
+            }
         } 
 
-        leftWindow->addButton(62, 65);
+        //leftWindow->addButton(62, 65);
 
 
-        leftWindow->drawUI();
-
-        bottomWindow->drawUI();
-        mainWindow->drawUI();
-        window->display();
+        
     }
 }
 
@@ -86,3 +118,20 @@ void GUI::constructMainWindow()
     mainWindow->setPosition(dwWidth * 0.01, dwHeight * 0.03);
 }
 
+/* MATH TIME
+* BORDER VALUES
+* 
+* 
+///MAIN WINDOW
+
+
+
+
+///LEFT WINDOW
+
+
+
+///BOTTOM WINDOW
+
+
+*/
