@@ -27,7 +27,11 @@ private:
 
 	DWORD dwWidth;
 	DWORD dwHeight;
-
+	DWORD mainWindowWidthCutoff;
+	DWORD mainWindowHeightCutoff;
+	double RESOLUTION_RATIO_WIDTH;
+	double RESOLUTION_RATIO_HEIGHT;
+	
 
 
 };

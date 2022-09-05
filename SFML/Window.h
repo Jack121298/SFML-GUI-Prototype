@@ -17,6 +17,7 @@ public:
 	void drawUI();
 	void colourPanel(sf::Color colour);
 	bool isMouseInBounds(sf::Vector2i);
+	sf::Vector2f* getSize();
 
 private:
 
@@ -29,6 +30,6 @@ private:
 	sf::RenderWindow* renderWindow;
 	std::vector<sf::Shape> shapeElements;
 	std::vector<Button*> buttons;
-
+	
 };
 

@@ -3,6 +3,8 @@
 
 Window::Window(sf::RenderWindow* renderWindow, int x, int y)
 {
+	std::cout <<  x << std::endl;
+	std::cout << y << std::endl;
 	location = new sf::Vector2f(x, y);
 	panel = new sf::RectangleShape(*location);
 	this->renderWindow = renderWindow;
@@ -18,6 +20,11 @@ void Window::setPosition(int x, int y)
 void Window::setSize(int x, int y)
 {
 	panel->setScale(x, y);
+}
+
+sf::Vector2f* Window::getSize()
+{
+	return location;
 }
 
 
@@ -41,7 +48,7 @@ void Window::drawButtons()
 
 void Window::colourPanel(sf::Color colour)
 {
-	panel->setFillColor(sf::Color::Green);
+	panel->setFillColor(colour);
 	renderWindow->draw(*panel);
 	renderWindow->display();
 }
@@ -65,6 +72,22 @@ void Window::addButton(float x, float y, std::string text)
 
 bool Window::isMouseInBounds(sf::Vector2i mouseLocation)
 {
-	return mouseLocation.x > panel->getOrigin().x && mouseLocation.x < panel->getLocalBounds().width
-		&& mouseLocation.y > panel->getOrigin().y && mouseLocation.y < panel->getLocalBounds().height;
+	std::cout << "**********************************" << std::endl;
+	std::cout << mouseLocation.x << std::endl;
+	std::cout << mouseLocation.y << std::endl;
+
+
+	std::cout << panel->getPosition().x << std::endl;
+	std::cout << panel->getPosition().y << std::endl;
+	std::cout << this->getSize()->x << std::endl;
+	std::cout << this->getSize()->y << std::endl;
+
+
+
+
+
+
+	return mouseLocation.x > panel->getPosition().x && mouseLocation.x < panel->getPosition().x + this->getSize()->x
+		&& mouseLocation.y > panel->getPosition().y && mouseLocation.y < panel->getPosition().y + this->getSize()->y;
 }
+

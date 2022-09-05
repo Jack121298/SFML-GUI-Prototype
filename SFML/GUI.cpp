@@ -6,10 +6,18 @@
 
 GUI::GUI()
 {
-    //dwWidth = GetSystemMetrics(SM_CXSCREEN);
-    //dwHeight = GetSystemMetrics(SM_CYSCREEN);
-    dwWidth = 1920;
-    dwHeight = 1080;
+    dwWidth = GetSystemMetrics(SM_CXSCREEN);
+    dwHeight = GetSystemMetrics(SM_CYSCREEN);
+    mainWindowWidthCutoff = dwHeight * 0.5;
+    mainWindowHeightCutoff = dwHeight * 0.2;
+
+    dwWidth = 2560;
+    dwHeight = 1440;
+
+
+    RESOLUTION_RATIO_WIDTH = dwWidth / 1920;
+    RESOLUTION_RATIO_HEIGHT = dwHeight / 1080;
+
 
 
     window = new sf::RenderWindow(sf::VideoMode(dwWidth, dwHeight), "Viewer", sf::Style::Fullscreen);
@@ -27,16 +35,16 @@ void GUI::run()
     constructLeftWindow();
     
 
-    
+   
 
 
 
     while (window->isOpen())
     {
-        window->clear(sf::Color(16, 27, 36));
+        
         sf::Event event;
+        window->clear(sf::Color(16, 27, 36));
         leftWindow->drawUI();
-
         bottomWindow->drawUI();
         mainWindow->drawUI();
         window->display();
@@ -64,32 +72,34 @@ void GUI::run()
                     window->close();
                 }
             }
-            if (event.type == sf::Event::MouseMoved)
+            
+            if (mainWindow->isMouseInBounds(sf::Mouse::getPosition()))
             {
-                if(mainWindow->isMouseInBounds(sf::Mouse::getPosition()))
-                {
-                    std::cout << "1" << std::endl;
-                    mainWindow->colourPanel(sf::Color::Green);
-                    //leftWindow->colourPanel(sf::Color::Black);
-                    //bottomWindow->colourPanel(sf::Color::Black);
-                }
-                
-                if(leftWindow->isMouseInBounds(sf::Mouse::getPosition()))
-                {
-                    std::cout << "2" << std::endl;
-                    mainWindow->colourPanel(sf::Color::Black);
-                    leftWindow->colourPanel(sf::Color::Green);
-                    bottomWindow->colourPanel(sf::Color::Black);
-                }
-                if(bottomWindow->isMouseInBounds(sf::Mouse::getPosition()))
-                {
-                    mainWindow->colourPanel(sf::Color::Black);
-                    leftWindow->colourPanel(sf::Color::Black);
-                    bottomWindow->colourPanel(sf::Color::Green);
-                }
-                
+
+                mainWindow->colourPanel(sf::Color::Green);
+                leftWindow->colourPanel(sf::Color::Black);
+                bottomWindow->colourPanel(sf::Color::Black);
             }
-        } 
+
+            if (leftWindow->isMouseInBounds(sf::Mouse::getPosition()))
+            {
+
+                mainWindow->colourPanel(sf::Color::Black);
+                leftWindow->colourPanel(sf::Color::Green);
+                bottomWindow->colourPanel(sf::Color::Black);
+            }
+            
+            if (bottomWindow->isMouseInBounds(sf::Mouse::getPosition()))
+            {
+                
+                mainWindow->colourPanel(sf::Color::Black);
+                leftWindow->colourPanel(sf::Color::Black);
+                bottomWindow->colourPanel(sf::Color::Green);
+            }
+            
+            
+        }
+
 
         //leftWindow->addButton(62, 65);
 
@@ -102,36 +112,19 @@ void GUI::run()
 
 
 
-void GUI::constructLeftWindow()
+
+void GUI::constructMainWindow()
 {
-    leftWindow = new Window(window, dwWidth * 0.79, dwHeight * 0.80);
-    leftWindow->setPosition(dwWidth * 0.2, dwHeight * 0.03);
+	mainWindow = new Window(window, dwWidth - 2 * (30 * RESOLUTION_RATIO_WIDTH) - mainWindowWidthCutoff, dwHeight - 4 * (30 * RESOLUTION_RATIO_HEIGHT) - mainWindowHeightCutoff);
+    mainWindow->setPosition(30 * RESOLUTION_RATIO_WIDTH + mainWindowWidthCutoff, 30 * RESOLUTION_RATIO_HEIGHT);
 }
 void GUI::constructBottomWindow()
 {
-	bottomWindow = new Window(window, dwWidth * 0.79, dwHeight * 0.14);
-    bottomWindow->setPosition(dwWidth * 0.2, dwHeight * 0.85);
+    bottomWindow = new Window(window, dwWidth - 2 * (30 * RESOLUTION_RATIO_WIDTH) - mainWindowWidthCutoff, dwHeight - mainWindow->getSize()->y - (3 * (30 * RESOLUTION_RATIO_HEIGHT)));
+    bottomWindow->setPosition(30 * RESOLUTION_RATIO_WIDTH + mainWindowWidthCutoff, mainWindow->getSize()->y + 2 * (30 * RESOLUTION_RATIO_HEIGHT));
 }
-void GUI::constructMainWindow()
+void GUI::constructLeftWindow()
 {
-	mainWindow = new Window(window, dwWidth * 0.185, dwHeight * 0.85 + dwHeight * 0.11);
-    mainWindow->setPosition(dwWidth * 0.01, dwHeight * 0.03);
+    leftWindow = new Window(window, mainWindowWidthCutoff - (30 * RESOLUTION_RATIO_WIDTH), mainWindow->getSize()->y + bottomWindow->getSize()->y + (1 * (30 * RESOLUTION_RATIO_HEIGHT)));
+    leftWindow->setPosition(30 * RESOLUTION_RATIO_WIDTH, 30 * RESOLUTION_RATIO_HEIGHT);
 }
-
-/* MATH TIME
-* BORDER VALUES
-* 
-* 
-///MAIN WINDOW
-
-
-
-
-///LEFT WINDOW
-
-
-
-///BOTTOM WINDOW
-
-
-*/
