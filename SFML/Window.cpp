@@ -5,8 +5,8 @@ Window::Window(sf::RenderWindow* renderWindow, int x, int y)
 {
 	std::cout <<  x << std::endl;
 	std::cout << y << std::endl;
-	location = new sf::Vector2f(x, y);
-	panel = new sf::RectangleShape(*location);
+	sizeVector = new sf::Vector2f(x, y);
+	panel = new sf::RectangleShape(*sizeVector);
 	this->renderWindow = renderWindow;
 }
 
@@ -24,18 +24,23 @@ void Window::setSize(int x, int y)
 
 sf::Vector2f* Window::getSize()
 {
-	return location;
+	return sizeVector;
 }
 
 
-void Window::drawUI()
+void Window::firstRender()
 {
-	panel->setFillColor(sf::Color(0, 0, 0));
+	panel->setFillColor(sf::Color(16, 27, 36));
 	panel->setOutlineThickness(1);
 	panel->setOutlineColor(sf::Color(150, 0, 0));
 	renderWindow->draw(*panel);
 	drawButtons();
+}
 
+void Window::drawUI()
+{
+	renderWindow->draw(*panel);
+	measureCursorRelativeToButtons();
 }
 
 void Window::drawButtons()
@@ -48,21 +53,20 @@ void Window::drawButtons()
 
 void Window::colourPanel(sf::Color colour)
 {
-	panel->setFillColor(colour);
-	renderWindow->draw(*panel);
-	renderWindow->display();
+	panel->setOutlineColor(colour);
+	drawUI();
 }
 
 
 void Window::addButton(float x, float y)
 {
-	Button* button = new Button(sf::Vector2f(x, y));
+	Button* button = new Button(new sf::Vector2f(x, y));
 	buttons.push_back(button);
 }
 
 void Window::addButton(float x, float y, std::string text)
 {
-	Button* button = new Button(sf::Vector2f(x, y), text);
+	Button* button = new Button(new sf::Vector2f(x, y), text);
 	buttons.push_back(button);
 }
 
@@ -72,22 +76,25 @@ void Window::addButton(float x, float y, std::string text)
 
 bool Window::isMouseInBounds(sf::Vector2i mouseLocation)
 {
-	std::cout << "**********************************" << std::endl;
-	std::cout << mouseLocation.x << std::endl;
-	std::cout << mouseLocation.y << std::endl;
-
-
-	std::cout << panel->getPosition().x << std::endl;
-	std::cout << panel->getPosition().y << std::endl;
-	std::cout << this->getSize()->x << std::endl;
-	std::cout << this->getSize()->y << std::endl;
-
-
-
-
-
-
 	return mouseLocation.x > panel->getPosition().x && mouseLocation.x < panel->getPosition().x + this->getSize()->x
 		&& mouseLocation.y > panel->getPosition().y && mouseLocation.y < panel->getPosition().y + this->getSize()->y;
 }
 
+
+
+
+
+void Window::measureCursorRelativeToButtons(sf::Vector2i mouseLocation)
+{
+	for (int i = 0; i < buttons.size(); i++)
+	{
+		if (buttons.at(i)->isMouseInBounds(mouseLocation))
+		{
+			buttons.at(i)->colourButton(sf::Color::Green, renderWindow);
+		}
+		else
+		{
+			buttons.at(i)->colourButton(sf::Color::Black, renderWindow);
+		}
+	}
+}

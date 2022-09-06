@@ -37,17 +37,20 @@ void GUI::run()
 
    
 
+    window->clear(sf::Color(0, 0, 0));
+    leftWindow->firstRender();
+    bottomWindow->firstRender();
+    mainWindow->firstRender();
 
+
+    mainWindow->addButton(100, 100);
+    window->display();
 
     while (window->isOpen())
     {
-        
+        window->clear(sf::Color(0, 0, 0));
         sf::Event event;
-        window->clear(sf::Color(16, 27, 36));
-        leftWindow->drawUI();
-        bottomWindow->drawUI();
-        mainWindow->drawUI();
-        window->display();
+       
 
 
         while (window->pollEvent(event))
@@ -56,15 +59,7 @@ void GUI::run()
             {
                 window->close();
             }
-            // TODO
-            /*
-            if (event.type == sf::Event::Resized)
-            {
-                // update the view to the new size of the window
-                sf::FloatRect visibleArea(0, 0, event.size.width, event.size.height);
-                window.setView(sf::View(visibleArea));
-            }
-            */
+          
             if (event.type == sf::Event::KeyPressed)
             {
                 if (event.key.code == sf::Keyboard::Escape)
@@ -72,39 +67,43 @@ void GUI::run()
                     window->close();
                 }
             }
-            
-            if (mainWindow->isMouseInBounds(sf::Mouse::getPosition()))
-            {
+        }
 
-                mainWindow->colourPanel(sf::Color::Green);
-                leftWindow->colourPanel(sf::Color::Black);
-                bottomWindow->colourPanel(sf::Color::Black);
-            }
+        
 
-            if (leftWindow->isMouseInBounds(sf::Mouse::getPosition()))
-            {
+        if (mainWindow->isMouseInBounds(sf::Mouse::getPosition()))
+        {
+            mainWindow->colourPanel(sf::Color::Green);
+            leftWindow->colourPanel(sf::Color::Red);
+            bottomWindow->colourPanel(sf::Color::Red);
+        }
 
-                mainWindow->colourPanel(sf::Color::Black);
-                leftWindow->colourPanel(sf::Color::Green);
-                bottomWindow->colourPanel(sf::Color::Black);
-            }
-            
-            if (bottomWindow->isMouseInBounds(sf::Mouse::getPosition()))
-            {
-                
-                mainWindow->colourPanel(sf::Color::Black);
-                leftWindow->colourPanel(sf::Color::Black);
-                bottomWindow->colourPanel(sf::Color::Green);
-            }
-            
-            
+        else if (leftWindow->isMouseInBounds(sf::Mouse::getPosition()))
+        {
+            mainWindow->colourPanel(sf::Color::Red);
+            leftWindow->colourPanel(sf::Color::Green);
+            bottomWindow->colourPanel(sf::Color::Red);
+        }
+
+        else if (bottomWindow->isMouseInBounds(sf::Mouse::getPosition()))
+        {
+            mainWindow->colourPanel(sf::Color::Red);
+            leftWindow->colourPanel(sf::Color::Red);
+            bottomWindow->colourPanel(sf::Color::Green);
+        }
+        else
+        {
+            mainWindow->colourPanel(sf::Color::Red);
+            leftWindow->colourPanel(sf::Color::Red);
+            bottomWindow->colourPanel(sf::Color::Red);
         }
 
 
-        //leftWindow->addButton(62, 65);
 
-
-        
+        leftWindow->drawUI();
+        bottomWindow->drawUI();
+        mainWindow->drawUI();
+        window->display();
     }
 }
 
