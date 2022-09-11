@@ -19,9 +19,13 @@ public:
 	void colourPanel(sf::Color colour);
 	bool isMouseInBounds(sf::Vector2i);
 	void measureCursorRelativeToButtons(sf::Vector2i mouseLocation);
+	void checkForButtonClick();
 	sf::Vector2f* getSize();
 
 private:
+
+
+
 
 
 	void drawButtons();
@@ -31,7 +35,7 @@ private:
 	sf::Shape* panel;
 	sf::RenderWindow* renderWindow;
 	std::vector<sf::Shape> shapeElements;
-	std::vector<Button*> buttons;
+	std::vector<Button*>* buttons;
 	
 };
 

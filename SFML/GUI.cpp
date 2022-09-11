@@ -37,7 +37,7 @@ void GUI::run()
 
    
 
-    window->clear(sf::Color(0, 0, 0));
+    window->clear(sf::Color(255, 255, 255));
     leftWindow->firstRender();
     bottomWindow->firstRender();
     mainWindow->firstRender();
@@ -67,48 +67,39 @@ void GUI::run()
                     window->close();
                 }
             }
-        }
-
-        
-
-        if (mainWindow->isMouseInBounds(sf::Mouse::getPosition()))
-        {
-            mainWindow->colourPanel(sf::Color::Green);
-            leftWindow->colourPanel(sf::Color::Red);
-            bottomWindow->colourPanel(sf::Color::Red);
-        }
-
-        else if (leftWindow->isMouseInBounds(sf::Mouse::getPosition()))
-        {
-            mainWindow->colourPanel(sf::Color::Red);
-            leftWindow->colourPanel(sf::Color::Green);
-            bottomWindow->colourPanel(sf::Color::Red);
-        }
-
-        else if (bottomWindow->isMouseInBounds(sf::Mouse::getPosition()))
-        {
-            mainWindow->colourPanel(sf::Color::Red);
-            leftWindow->colourPanel(sf::Color::Red);
-            bottomWindow->colourPanel(sf::Color::Green);
-        }
-        else
-        {
-            mainWindow->colourPanel(sf::Color::Red);
-            leftWindow->colourPanel(sf::Color::Red);
-            bottomWindow->colourPanel(sf::Color::Red);
+            if (event.type == sf::Event::MouseButtonPressed)
+            {
+                if (event.key.code == sf::Mouse::Left)
+                {
+                    panelCheckForButtonClick();
+                }
+            }
         }
 
 
-
-        leftWindow->drawUI();
-        bottomWindow->drawUI();
-        mainWindow->drawUI();
-        window->display();
+        update();
     }
+}
+
+void GUI::update()
+{
+    leftWindow->drawUI();
+    bottomWindow->drawUI();
+    mainWindow->drawUI();
+    window->display();
 }
 
 
 
+void GUI::panelCheckForButtonClick()
+{
+    leftWindow->checkForButtonClick();
+    //std::cout << "1" << std::endl;
+    bottomWindow->checkForButtonClick();
+    //std::cout << "2" << std::endl;
+    mainWindow->checkForButtonClick();
+    //std::cout << "3" << std::endl;
+}
 
 
 

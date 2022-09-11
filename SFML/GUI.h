@@ -15,6 +15,10 @@ public:
 
 private:
 
+
+	void update();
+	void panelCheckForButtonClick();
+
 	void constructLeftWindow();
 	void constructBottomWindow();
 	void constructMainWindow();
