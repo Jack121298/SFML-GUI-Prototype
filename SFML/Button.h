@@ -6,15 +6,22 @@ class Button
 {
 public:
 
-	Button();
+	Button(sf::Vector2f*);
+	Button(sf::Vector2f*, std::string);
 	~Button();
 
 
+	void draw(sf::RenderWindow*);
+	bool isMouseInBounds(sf::Vector2i);
+	sf::Vector2f* getSize();
+	void colourButton(sf::Color, sf::RenderWindow*);
+	void setPosition(int, int);
+
 private:
 
-
-	const sf::RectangleShape box;
-	const std::string text;
+	sf::Vector2f* sizeVector;
+	sf::RectangleShape* box;
+	std::string text;
 
 };
 
