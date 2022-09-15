@@ -42,8 +42,12 @@ void GUI::run()
     bottomWindow->firstRender();
     mainWindow->firstRender();
 
+    Button* button = new Button(new sf::Vector2f((mainWindowWidthCutoff - (30 * RESOLUTION_RATIO_WIDTH)) * 0.8, 20));
+    button->setPosition(30 * RESOLUTION_RATIO_WIDTH + ((mainWindowWidthCutoff - (30 * RESOLUTION_RATIO_WIDTH)) - (mainWindowWidthCutoff - (30 * RESOLUTION_RATIO_WIDTH)) * 0.8)/2, 100);
 
-    mainWindow->addButton(100, 100);
+
+    mainWindow->addButton(button);
+    
     window->display();
 
     while (window->isOpen())
@@ -74,10 +78,20 @@ void GUI::run()
                     panelCheckForButtonClick();
                 }
             }
+            if (event.type == sf::Event::MouseButtonReleased)
+            {
+                if (event.key.code == sf::Mouse::Left)
+                {
+                    panelCheckForMouseHover();
+                }
+            }
+            if (event.type == sf::Event::MouseMoved)
+            {
+                panelCheckForMouseHover();
+            }
         }
-
-
         update();
+
     }
 }
 
@@ -98,6 +112,17 @@ void GUI::panelCheckForButtonClick()
     bottomWindow->checkForButtonClick();
     //std::cout << "2" << std::endl;
     mainWindow->checkForButtonClick();
+    //std::cout << "3" << std::endl;
+}
+
+
+void GUI::panelCheckForMouseHover()
+{
+    leftWindow->checkForMouseHover();
+    //std::cout << "1" << std::endl;
+    bottomWindow->checkForMouseHover();
+    //std::cout << "2" << std::endl;
+    mainWindow->checkForMouseHover();
     //std::cout << "3" << std::endl;
 }
 

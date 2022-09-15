@@ -41,17 +41,8 @@ void Window::firstRender()
 
 void Window::drawUI()
 {
-	measureCursorRelativeToButtons(sf::Mouse::getPosition());
-	if (isMouseInBounds(sf::Mouse::getPosition()))
-	{
-		panel->setOutlineColor(sf::Color::Green);
-	}
-	else
-	{
-		panel->setOutlineColor(sf::Color::Red);
-	}
 	renderWindow->draw(*panel);
-
+	drawButtons();
 }
 
 void Window::drawButtons()
@@ -69,15 +60,13 @@ void Window::colourPanel(sf::Color colour)
 }
 
 
-void Window::addButton(float x, float y)
+void Window::addButton(Button* button)
 {
-	Button* button = new Button(new sf::Vector2f(x, y));
 	buttons->push_back(button);
 }
 
-void Window::addButton(float x, float y, std::string text)
+void Window::addButton(Button* button, std::string text)
 {
-	Button* button = new Button(new sf::Vector2f(x, y), text);
 	buttons->push_back(button);
 }
 
@@ -111,21 +100,29 @@ void Window::measureCursorRelativeToButtons(sf::Vector2i mouseLocation)
 }
 
 
-
+void Window::checkForMouseHover()
+{
+	measureCursorRelativeToButtons(sf::Mouse::getPosition());
+	if (isMouseInBounds(sf::Mouse::getPosition()))
+	{
+		panel->setOutlineColor(sf::Color::Green);
+	}
+	else
+	{
+		panel->setOutlineColor(sf::Color::Red);
+	}
+}
 
 
 void Window::checkForButtonClick()
 {
-	//std::cout << ("SIZE:" + buttons->size()) << std::endl;
 	int index = 0;
 	if (!buttons->empty())
 	{
-		while (!buttons->at(index)->isMouseInBounds(sf::Mouse::getPosition()) && index < buttons->size())
+		while (index < buttons->size() && !buttons->at(index)->isMouseInBounds(sf::Mouse::getPosition()))
 		{
-			std::cout << "dsgfsdgffsdgs " << std::endl;
 			index++;
 		}
-		std::cout << index << std::endl;
 		if (index < buttons->size())
 		{
 			buttons->at(index)->colourButton(sf::Color::Blue, renderWindow);

@@ -22,6 +22,7 @@ private:
 	void constructLeftWindow();
 	void constructBottomWindow();
 	void constructMainWindow();
+	void panelCheckForMouseHover();
 
 	Window* leftWindow;
 	Window* bottomWindow;

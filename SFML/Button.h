@@ -15,6 +15,7 @@ public:
 	bool isMouseInBounds(sf::Vector2i);
 	sf::Vector2f* getSize();
 	void colourButton(sf::Color, sf::RenderWindow*);
+	void setPosition(int, int);
 
 private:
 
